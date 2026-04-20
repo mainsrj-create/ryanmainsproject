@@ -1,0 +1,377 @@
+/* =============================================
+   BASKETBALL THEME — MONOTONE FLUENT DESIGN
+   mystyles.css
+   ============================================= */
+
+/* --- Google Fonts Import --- */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;600;700&display=swap');
+
+/* --- CSS Variables (Monotone Palette) --- */
+:root {
+  --black:        #0a0a0a;
+  --dark:         #1a1a1a;
+  --mid-dark:     #2c2c2c;
+  --mid:          #4a4a4a;
+  --mid-light:    #7a7a7a;
+  --light:        #b0b0b0;
+  --off-white:    #e8e8e8;
+  --white:        #f5f5f5;
+
+  /* Fluent Design Tokens */
+  --blur-bg:       rgba(26, 26, 26, 0.75);
+  --glass-border:  rgba(255, 255, 255, 0.08);
+  --shadow-soft:   0 8px 32px rgba(0, 0, 0, 0.6);
+  --shadow-hard:   0 2px 8px rgba(0, 0, 0, 0.9);
+  --radius:        12px;
+  --radius-sm:     6px;
+  --radius-lg:     24px;
+  --transition:    all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Typography */
+  --font-display: 'Bebas Neue', 'Impact', sans-serif;
+  --font-body:    'Barlow', 'Helvetica Neue', sans-serif;
+}
+
+/* =============================================
+   RESET & BASE
+   ============================================= */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* =============================================
+   FONT FAMILY STYLES
+   ============================================= */
+
+/* Style 1: Display / Heading Font */
+h1, h2, h3, ol > li {
+  font-family: var(--font-display);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Style 2: Body / UI Font */
+body, p, ul li, a, iframe, .nav-link {
+  font-family: var(--font-body);
+  font-weight: 400;
+}
+
+/* =============================================
+   FONT COLOR STYLES
+   ============================================= */
+
+/* Style 3: Primary text — off-white on dark background */
+body {
+  color: var(--off-white);
+}
+
+/* Style 4: Heading color — bright white with texture feel */
+h1 {
+  color: var(--white);
+  text-shadow: 0 2px 12px rgba(0,0,0,0.8), 0 0 40px rgba(180,180,180,0.15);
+}
+
+/* Style 5: List item labels — slightly dimmed */
+ul li {
+  color: var(--light);
+}
+
+/* Style 6: Links — mid-light, brighten on hover */
+a {
+  color: var(--light);
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+a:hover {
+  color: var(--white);
+  text-shadow: 0 0 12px rgba(255,255,255,0.4);
+}
+
+/* Style 7: Ordered list item numbers — bright accent */
+ol > li {
+  color: var(--white);
+  font-size: 1.6rem;
+}
+
+/* =============================================
+   BODY & BACKGROUND
+   ============================================= */
+
+body {
+  background-color: var(--black);
+  background-image:
+    /* Subtle basketball hex-court texture using radial gradients */
+    radial-gradient(ellipse at 20% 50%, rgba(80,80,80,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(60,60,60,0.09) 0%, transparent 55%),
+    /* Fine grain noise feel using repeating pattern */
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(255,255,255,0.01) 2px,
+      rgba(255,255,255,0.01) 4px
+    );
+  min-height: 100vh;
+  padding: 0 0 60px 0;
+}
+
+/* =============================================
+   HEADER
+   ============================================= */
+
+h1#top {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 6vw, 5rem);
+  color: var(--white);
+  line-height: 1;
+  padding: 48px 40px 20px;
+  border-bottom: 1px solid var(--glass-border);
+  background: linear-gradient(180deg, var(--dark) 0%, transparent 100%);
+  position: relative;
+}
+
+/* Decorative basketball-seam accent line */
+h1#top::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--mid-light), transparent);
+  border-radius: 2px;
+  margin-top: 12px;
+}
+
+/* =============================================
+   NAVIGATION LINKS (top & back-to-top)
+   ============================================= */
+
+body > a {
+  display: inline-block;
+  margin: 16px 40px;
+  padding: 8px 20px;
+  border: 1px solid var(--mid-dark);
+  border-radius: var(--radius-sm);
+  background: var(--mid-dark);
+  color: var(--light);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  transition: var(--transition);
+}
+
+body > a:hover {
+  background: var(--mid);
+  border-color: var(--mid-light);
+  color: var(--white);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-soft);
+}
+
+/* =============================================
+   DIV 1: MAIN CONTENT WRAPPER
+   — Centers and constrains the page content
+   ============================================= */
+
+body > ol {
+  max-width: 760px;
+  margin: 32px auto;
+  padding: 0 40px;
+  list-style: none;
+  counter-reset: player-counter;
+}
+
+/* =============================================
+   DIV 2: PLAYER CARD
+   — Fluent glass card for each player block
+   ============================================= */
+
+ol > li {
+  counter-increment: player-counter;
+  background: var(--blur-bg);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 32px 36px;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow-soft);
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+ol > li:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.7);
+}
+
+/* Numbered badge — top-right corner */
+ol > li::before {
+  content: counter(player-counter);
+  font-family: var(--font-display);
+  font-size: 5rem;
+  color: rgba(255,255,255,0.04);
+  position: absolute;
+  top: 12px;
+  right: 24px;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Basketball seam decorative arc */
+ol > li::after {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 140px;
+  height: 140px;
+  border: 2px solid rgba(255,255,255,0.04);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Player name text inside li */
+ol > li > b,
+ol > li:not(ul li) {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--white);
+  margin-bottom: 16px;
+}
+
+/* =============================================
+   PLAYER IMAGES
+   ============================================= */
+
+img {
+  display: block;
+  width: 300px;
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  margin: 16px 0;
+  border: 1px solid var(--glass-border);
+  filter: grayscale(30%) contrast(1.05);
+  box-shadow: var(--shadow-hard);
+  transition: var(--transition);
+}
+
+img:hover {
+  filter: grayscale(0%) contrast(1.1);
+  box-shadow: 0 8px 32px rgba(255,255,255,0.08);
+}
+
+/* =============================================
+   BULLET LISTS (Player Stats/Notes)
+   ============================================= */
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0 0;
+}
+
+ul li {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: var(--light);
+  padding: 7px 0 7px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  position: relative;
+  line-height: 1.5;
+  transition: color 0.2s ease;
+}
+
+ul li:last-child {
+  border-bottom: none;
+}
+
+/* Custom bullet: basketball dot */
+ul li::before {
+  content: '◈';
+  position: absolute;
+  left: 0;
+  color: var(--mid-light);
+  font-size: 0.7rem;
+  top: 9px;
+}
+
+ul li:hover {
+  color: var(--off-white);
+}
+
+/* =============================================
+   DIV 3: MEDIA SECTION
+   — Wraps the YouTube iframe + Tableau viz
+   ============================================= */
+
+body > div {
+  max-width: 760px;
+  margin: 28px auto;
+  padding: 28px 36px;
+  background: var(--blur-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+}
+
+/* Iframe inside media div */
+iframe {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-hard);
+}
+
+/* Tableau embed container */
+#viz1776714757823 {
+  width: 100%;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+/* =============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================= */
+
+@media (max-width: 600px) {
+  h1#top {
+    padding: 32px 20px 16px;
+    font-size: 2.2rem;
+  }
+
+  body > ol {
+    padding: 0 16px;
+  }
+
+  ol > li {
+    padding: 24px 20px;
+  }
+
+  body > div {
+    margin: 20px 16px;
+    padding: 20px 16px;
+  }
+
+  body > a {
+    margin: 12px 16px;
+  }
+}
